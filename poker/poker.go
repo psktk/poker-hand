@@ -26,7 +26,7 @@ func (h Hand) IsStraight() bool {
 		ranks[c.Rank] = true
 	}
 
-	min, max := card.King, card.Ace
+	min, max := card.Ace, card.Two
 	for r := range ranks {
 		if r < min {
 			min = r
@@ -44,28 +44,18 @@ func (h Hand) IsStraight() bool {
 		return true
 	}
 
-	// special case: 10, J, Q, K, A
-	if ranks[card.Ten] && ranks[card.Jack] && ranks[card.Queen] && ranks[card.King] && ranks[card.Ace] {
+	// special case: A, 2, 3, 4, 5
+	if ranks[card.Ace] && ranks[card.Two] && ranks[card.Three] && ranks[card.Four] && ranks[card.Five] {
 		return true
 	}
 
 	return false
 }
 
-// rankSortValue returns the sorting value for a rank, treating Ace as highest (14)
-func rankSortValue(r card.Rank) int {
-	if r == card.Ace {
-		return 14
-	}
-	return int(r)
-}
-
-// Sort sorts the hand in ascending order with Ace as the highest card
 func (h *Hand) Sort() {
-	// Simple bubble sort - sufficient for 5 cards
 	for i := 0; i < 4; i++ {
 		for j := 0; j < 4-i; j++ {
-			if rankSortValue((*h)[j].Rank) > rankSortValue((*h)[j+1].Rank) {
+			if (*h)[j].Rank > (*h)[j+1].Rank {
 				(*h)[j], (*h)[j+1] = (*h)[j+1], (*h)[j]
 			}
 		}

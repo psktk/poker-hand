@@ -4,8 +4,7 @@ type Rank uint8
 type Suit uint8
 
 const (
-	Ace Rank = iota
-	Two
+	Two Rank = iota
 	Three
 	Four
 	Five
@@ -17,6 +16,7 @@ const (
 	Jack
 	Queen
 	King
+	Ace
 )
 
 const (
