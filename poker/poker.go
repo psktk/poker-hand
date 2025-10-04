@@ -69,6 +69,24 @@ func (h Hand) IsFourOfAKind() bool {
 	return false
 }
 
+func (h Hand) IsFullHouse() bool {
+	rankCount := make(map[rank.R]int)
+	for _, c := range h {
+		rankCount[c.Rank]++
+	}
+	hasThree := false
+	hasTwo := false
+	for _, count := range rankCount {
+		if count == 3 {
+			hasThree = true
+		}
+		if count == 2 {
+			hasTwo = true
+		}
+	}
+	return hasThree && hasTwo
+}
+
 func (h *Hand) Sort() {
 	for i := range 4 {
 		for j := range 4 - i {
