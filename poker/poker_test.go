@@ -110,3 +110,62 @@ func TestIsStraight(t *testing.T) {
 		assert.True(t, h.IsStraight())
 	})
 }
+
+func TestSort(t *testing.T) {
+	t.Run("should sort the hand in ascending order by rank", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.King, card.Heart),
+			card.New(card.Three, card.Spade),
+			card.New(card.Queen, card.Diamond),
+			card.New(card.Five, card.Club),
+			card.New(card.Ten, card.Heart),
+		)
+		h.Sort()
+		expected := NewHand(
+			card.New(card.Three, card.Spade),
+			card.New(card.Five, card.Club),
+			card.New(card.Ten, card.Heart),
+			card.New(card.Queen, card.Diamond),
+			card.New(card.King, card.Heart),
+		)
+		assert.Equal(t, expected, h)
+	})
+
+	t.Run("should sort a hand with duplicate ranks", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.Five, card.Heart),
+			card.New(card.Three, card.Spade),
+			card.New(card.Five, card.Diamond),
+			card.New(card.Two, card.Club),
+			card.New(card.Three, card.Heart),
+		)
+		h.Sort()
+		expected := NewHand(
+			card.New(card.Two, card.Club),
+			card.New(card.Three, card.Spade),
+			card.New(card.Three, card.Heart),
+			card.New(card.Five, card.Heart),
+			card.New(card.Five, card.Diamond),
+		)
+		assert.Equal(t, expected, h)
+	})
+
+	t.Run("should sort a hand with ace as the highest rank", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.Three, card.Heart),
+			card.New(card.Ace, card.Spade),
+			card.New(card.Ten, card.Diamond),
+			card.New(card.Four, card.Club),
+			card.New(card.King, card.Heart),
+		)
+		h.Sort()
+		expected := NewHand(
+			card.New(card.Three, card.Heart),
+			card.New(card.Four, card.Club),
+			card.New(card.Ten, card.Diamond),
+			card.New(card.King, card.Heart),
+			card.New(card.Ace, card.Spade),
+		)
+		assert.Equal(t, expected, h)
+	})
+}

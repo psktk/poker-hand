@@ -51,3 +51,23 @@ func (h Hand) IsStraight() bool {
 
 	return false
 }
+
+// rankSortValue returns the sorting value for a rank, treating Ace as highest (14)
+func rankSortValue(r card.Rank) int {
+	if r == card.Ace {
+		return 14
+	}
+	return int(r)
+}
+
+// Sort sorts the hand in ascending order with Ace as the highest card
+func (h *Hand) Sort() {
+	// Simple bubble sort - sufficient for 5 cards
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 4-i; j++ {
+			if rankSortValue((*h)[j].Rank) > rankSortValue((*h)[j+1].Rank) {
+				(*h)[j], (*h)[j+1] = (*h)[j+1], (*h)[j]
+			}
+		}
+	}
+}
