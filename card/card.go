@@ -26,11 +26,11 @@ const (
 	Club
 )
 
-type Card struct {
+type C struct {
 	Rank Rank
 	Suit Suit
 }
 
-func New(r Rank, s Suit) Card {
-	return Card{r, s}
+func New(r Rank, s Suit) C {
+	return C{r, s}
 }
