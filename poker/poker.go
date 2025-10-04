@@ -57,10 +57,7 @@ func (h Hand) IsRoyalFlush() bool {
 }
 
 func (h Hand) IsFourOfAKind() bool {
-	rankCount := make(map[rank.R]int)
-	for _, c := range h {
-		rankCount[c.Rank]++
-	}
+	rankCount := h.rankCountMap()
 	for _, count := range rankCount {
 		if count == 4 {
 			return true
@@ -70,10 +67,7 @@ func (h Hand) IsFourOfAKind() bool {
 }
 
 func (h Hand) IsFullHouse() bool {
-	rankCount := make(map[rank.R]int)
-	for _, c := range h {
-		rankCount[c.Rank]++
-	}
+	rankCount := h.rankCountMap()
 	hasThree := false
 	hasTwo := false
 	for _, count := range rankCount {
@@ -88,10 +82,7 @@ func (h Hand) IsFullHouse() bool {
 }
 
 func (h Hand) IsThreeOfAKind() bool {
-	rankCount := make(map[rank.R]int)
-	for _, c := range h {
-		rankCount[c.Rank]++
-	}
+	rankCount := h.rankCountMap()
 	hasThree := false
 	hasPair := false
 	for _, count := range rankCount {
@@ -113,4 +104,12 @@ func (h *Hand) Sort() {
 			}
 		}
 	}
+}
+
+func (h Hand) rankCountMap() map[rank.R]int {
+	m := make(map[rank.R]int)
+	for _, c := range h {
+		m[c.Rank]++
+	}
+	return m
 }
