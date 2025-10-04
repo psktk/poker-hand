@@ -53,8 +53,8 @@ func (h Hand) IsStraight() bool {
 }
 
 func (h *Hand) Sort() {
-	for i := 0; i < 4; i++ {
-		for j := 0; j < 4-i; j++ {
+	for i := range 4 {
+		for j := range 4 - i {
 			if (*h)[j].Rank > (*h)[j+1].Rank {
 				(*h)[j], (*h)[j+1] = (*h)[j+1], (*h)[j]
 			}
