@@ -231,6 +231,41 @@ func TestIsFullHouse(t *testing.T) {
 	})
 }
 
+func TestIsThreeOfAKind(t *testing.T) {
+	t.Run("should return true for a three of a kind hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.Ace, suit.Diamond),
+			card.New(rank.King, suit.Club),
+			card.New(rank.Five, suit.Heart),
+		)
+		assert.True(t, h.IsThreeOfAKind())
+	})
+
+	t.Run("should return false for a non-three of a kind hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.King, suit.Diamond),
+			card.New(rank.King, suit.Club),
+			card.New(rank.Five, suit.Heart),
+		)
+		assert.False(t, h.IsThreeOfAKind())
+	})
+
+	t.Run("should return false for a full house hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.Ace, suit.Diamond),
+			card.New(rank.King, suit.Club),
+			card.New(rank.King, suit.Heart),
+		)
+		assert.False(t, h.IsThreeOfAKind())
+	})
+}
+
 func TestSort(t *testing.T) {
 	t.Run("should sort the hand in ascending order by rank", func(t *testing.T) {
 		h := NewHand(

@@ -87,6 +87,24 @@ func (h Hand) IsFullHouse() bool {
 	return hasThree && hasTwo
 }
 
+func (h Hand) IsThreeOfAKind() bool {
+	rankCount := make(map[rank.R]int)
+	for _, c := range h {
+		rankCount[c.Rank]++
+	}
+	hasThree := false
+	hasPair := false
+	for _, count := range rankCount {
+		if count == 3 {
+			hasThree = true
+		}
+		if count == 2 {
+			hasPair = true
+		}
+	}
+	return hasThree && !hasPair
+}
+
 func (h *Hand) Sort() {
 	for i := range 4 {
 		for j := range 4 - i {
