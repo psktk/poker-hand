@@ -301,6 +301,30 @@ func TestIsTwoPair(t *testing.T) {
 	})
 }
 
+func TestIsOnePair(t *testing.T) {
+	t.Run("should return true for a one pair hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.Queen, suit.Diamond),
+			card.New(rank.Jack, suit.Club),
+			card.New(rank.Ten, suit.Heart),
+		)
+		assert.True(t, h.IsOnePair())
+	})
+
+	t.Run("should return false for a two pair hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.King, suit.Diamond),
+			card.New(rank.King, suit.Club),
+			card.New(rank.Five, suit.Heart),
+		)
+		assert.False(t, h.IsOnePair())
+	})
+}
+
 func TestSort(t *testing.T) {
 	t.Run("should sort the hand in ascending order by rank", func(t *testing.T) {
 		h := NewHand(
