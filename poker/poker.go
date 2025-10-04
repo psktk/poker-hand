@@ -111,3 +111,12 @@ func (h Hand) hasTriplet() bool {
 	}
 	return false
 }
+
+func (h Hand) countPairs() (pairs int) {
+	for _, count := range h.rankCountMap() {
+		if count == 2 {
+			pairs++
+		}
+	}
+	return
+}

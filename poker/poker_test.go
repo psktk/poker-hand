@@ -324,3 +324,49 @@ func TestSort(t *testing.T) {
 		assert.Equal(t, expected, h)
 	})
 }
+
+func TestCountPairs(t *testing.T) {
+	t.Run("should return 0 for a hand with no pairs", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.King, suit.Spade),
+			card.New(rank.Queen, suit.Diamond),
+			card.New(rank.Jack, suit.Club),
+			card.New(rank.Ten, suit.Heart),
+		)
+		assert.Equal(t, 0, h.countPairs())
+	})
+
+	t.Run("should return 1 for a hand with one pair", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.Queen, suit.Diamond),
+			card.New(rank.Jack, suit.Club),
+			card.New(rank.Ten, suit.Heart),
+		)
+		assert.Equal(t, 1, h.countPairs())
+	})
+
+	t.Run("should return 2 for a hand with two pairs", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.King, suit.Diamond),
+			card.New(rank.King, suit.Club),
+			card.New(rank.Ten, suit.Heart),
+		)
+		assert.Equal(t, 2, h.countPairs())
+	})
+
+	t.Run("should return 1 for a full house hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.King, suit.Diamond),
+			card.New(rank.King, suit.Club),
+			card.New(rank.King, suit.Heart),
+		)
+		assert.Equal(t, 1, h.countPairs())
+	})
+}
