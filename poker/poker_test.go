@@ -6,40 +6,38 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/psktk/poker-hand/card"
-	"github.com/psktk/poker-hand/rank"
-	"github.com/psktk/poker-hand/suit"
 )
 
 func TestIsFlush(t *testing.T) {
 	t.Run("should return true for a straight flush hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Two, suit.Heart),
-			card.New(rank.Three, suit.Heart),
-			card.New(rank.Four, suit.Heart),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.TwoOfHearts,
+			card.ThreeOfHearts,
+			card.FourOfHearts,
+			card.FiveOfHearts,
 		)
 		assert.True(t, h.IsFlush())
 	})
 
 	t.Run("should return true for a flush hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Two, suit.Spade),
-			card.New(rank.Four, suit.Spade),
-			card.New(rank.Six, suit.Spade),
-			card.New(rank.Eight, suit.Spade),
-			card.New(rank.Ten, suit.Spade),
+			card.TwoOfSpades,
+			card.FourOfSpades,
+			card.SixOfSpades,
+			card.EightOfSpades,
+			card.TenOfSpades,
 		)
 		assert.True(t, h.IsFlush())
 	})
 
 	t.Run("should return false for a non-flush hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Two, suit.Heart),
-			card.New(rank.Four, suit.Heart),
-			card.New(rank.Six, suit.Heart),
-			card.New(rank.Eight, suit.Heart),
-			card.New(rank.Ten, suit.Spade),
+			card.TwoOfHearts,
+			card.FourOfHearts,
+			card.SixOfHearts,
+			card.EightOfHearts,
+			card.TenOfSpades,
 		)
 		assert.False(t, h.IsFlush())
 	})
@@ -48,66 +46,66 @@ func TestIsFlush(t *testing.T) {
 func TestIsStraight(t *testing.T) {
 	t.Run("should return true for a straight hand two to six", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Two, suit.Spade),
-			card.New(rank.Three, suit.Diamond),
-			card.New(rank.Four, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.TwoOfSpades,
+			card.ThreeOfDiamonds,
+			card.FourOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.True(t, h.IsStraight())
 	})
 
 	t.Run("should return true for a straight hand nine to king", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Nine, suit.Heart),
-			card.New(rank.Ten, suit.Spade),
-			card.New(rank.Jack, suit.Diamond),
-			card.New(rank.Queen, suit.Club),
-			card.New(rank.King, suit.Heart),
+			card.NineOfHearts,
+			card.TenOfSpades,
+			card.JackOfDiamonds,
+			card.QueenOfClubs,
+			card.KingOfHearts,
 		)
 		assert.True(t, h.IsStraight())
 	})
 
 	t.Run("should return false for a hand with duplicate ranks", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Two, suit.Heart),
-			card.New(rank.Three, suit.Spade),
-			card.New(rank.Three, suit.Diamond),
-			card.New(rank.Four, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.TwoOfHearts,
+			card.ThreeOfSpades,
+			card.ThreeOfDiamonds,
+			card.FourOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.False(t, h.IsStraight())
 	})
 
 	t.Run("should return false for a non-straight hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Two, suit.Heart),
-			card.New(rank.Four, suit.Spade),
-			card.New(rank.Six, suit.Diamond),
-			card.New(rank.Eight, suit.Club),
-			card.New(rank.Ten, suit.Heart),
+			card.TwoOfHearts,
+			card.FourOfSpades,
+			card.SixOfDiamonds,
+			card.EightOfClubs,
+			card.TenOfHearts,
 		)
 		assert.False(t, h.IsStraight())
 	})
 
 	t.Run("should return true for a straight hand ten to ace", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ten, suit.Heart),
-			card.New(rank.Jack, suit.Spade),
-			card.New(rank.Queen, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.Ace, suit.Heart),
+			card.TenOfHearts,
+			card.JackOfSpades,
+			card.QueenOfDiamonds,
+			card.KingOfClubs,
+			card.AceOfHearts,
 		)
 		assert.True(t, h.IsStraight())
 	})
 
 	t.Run("should return true for a straight hand ace to five", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Two, suit.Spade),
-			card.New(rank.Three, suit.Diamond),
-			card.New(rank.Four, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.TwoOfSpades,
+			card.ThreeOfDiamonds,
+			card.FourOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.True(t, h.IsStraight())
 	})
@@ -116,44 +114,44 @@ func TestIsStraight(t *testing.T) {
 func TestIsStraightFlush(t *testing.T) {
 	t.Run("should return true for a straight flush hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Two, suit.Heart),
-			card.New(rank.Three, suit.Heart),
-			card.New(rank.Four, suit.Heart),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.TwoOfHearts,
+			card.ThreeOfHearts,
+			card.FourOfHearts,
+			card.FiveOfHearts,
 		)
 		assert.True(t, h.IsStraightFlush())
 	})
 
 	t.Run("should return false for a flush hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Two, suit.Spade),
-			card.New(rank.Four, suit.Spade),
-			card.New(rank.Six, suit.Spade),
-			card.New(rank.Eight, suit.Spade),
-			card.New(rank.Ten, suit.Spade),
+			card.TwoOfSpades,
+			card.FourOfSpades,
+			card.SixOfSpades,
+			card.EightOfSpades,
+			card.TenOfSpades,
 		)
 		assert.False(t, h.IsStraightFlush())
 	})
 
 	t.Run("should return false for a straight hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Two, suit.Heart),
-			card.New(rank.Three, suit.Spade),
-			card.New(rank.Four, suit.Diamond),
-			card.New(rank.Five, suit.Club),
-			card.New(rank.Six, suit.Heart),
+			card.TwoOfHearts,
+			card.ThreeOfSpades,
+			card.FourOfDiamonds,
+			card.FiveOfClubs,
+			card.SixOfHearts,
 		)
 		assert.False(t, h.IsStraightFlush())
 	})
 
 	t.Run("should return false for a non-straight flush hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Two, suit.Heart),
-			card.New(rank.Four, suit.Heart),
-			card.New(rank.Six, suit.Heart),
-			card.New(rank.Eight, suit.Heart),
-			card.New(rank.Ten, suit.Spade),
+			card.TwoOfHearts,
+			card.FourOfHearts,
+			card.SixOfHearts,
+			card.EightOfHearts,
+			card.TenOfSpades,
 		)
 		assert.False(t, h.IsStraightFlush())
 	})
@@ -162,22 +160,22 @@ func TestIsStraightFlush(t *testing.T) {
 func TestIsRoyalFlush(t *testing.T) {
 	t.Run("should return true for a royal flush hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ten, suit.Heart),
-			card.New(rank.Jack, suit.Heart),
-			card.New(rank.Queen, suit.Heart),
-			card.New(rank.King, suit.Heart),
-			card.New(rank.Ace, suit.Heart),
+			card.TenOfHearts,
+			card.JackOfHearts,
+			card.QueenOfHearts,
+			card.KingOfHearts,
+			card.AceOfHearts,
 		)
 		assert.True(t, h.IsRoyalFlush())
 	})
 
 	t.Run("should return false for a straight flush hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Nine, suit.Heart),
-			card.New(rank.Ten, suit.Heart),
-			card.New(rank.Jack, suit.Heart),
-			card.New(rank.Queen, suit.Heart),
-			card.New(rank.King, suit.Heart),
+			card.NineOfHearts,
+			card.TenOfHearts,
+			card.JackOfHearts,
+			card.QueenOfHearts,
+			card.KingOfHearts,
 		)
 		assert.False(t, h.IsRoyalFlush())
 	})
@@ -186,22 +184,22 @@ func TestIsRoyalFlush(t *testing.T) {
 func TestIsFourOfAKind(t *testing.T) {
 	t.Run("should return true for a four of a kind hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Ace, suit.Diamond),
-			card.New(rank.Ace, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.AceOfDiamonds,
+			card.AceOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.True(t, h.IsFourOfAKind())
 	})
 
 	t.Run("should return false for a non-four of a kind hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Ace, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.AceOfDiamonds,
+			card.KingOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.False(t, h.IsFourOfAKind())
 	})
@@ -210,22 +208,22 @@ func TestIsFourOfAKind(t *testing.T) {
 func TestIsFullHouse(t *testing.T) {
 	t.Run("should return true for a full house hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Ace, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.King, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.AceOfDiamonds,
+			card.KingOfClubs,
+			card.KingOfHearts,
 		)
 		assert.True(t, h.IsFullHouse())
 	})
 
 	t.Run("should return false for a non-full house hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.King, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.KingOfDiamonds,
+			card.KingOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.False(t, h.IsFullHouse())
 	})
@@ -234,33 +232,33 @@ func TestIsFullHouse(t *testing.T) {
 func TestIsThreeOfAKind(t *testing.T) {
 	t.Run("should return true for a three of a kind hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Ace, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.AceOfDiamonds,
+			card.KingOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.True(t, h.IsThreeOfAKind())
 	})
 
 	t.Run("should return false for a non-three of a kind hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.King, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.KingOfDiamonds,
+			card.KingOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.False(t, h.IsThreeOfAKind())
 	})
 
 	t.Run("should return false for a full house hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Ace, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.King, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.AceOfDiamonds,
+			card.KingOfClubs,
+			card.KingOfHearts,
 		)
 		assert.False(t, h.IsThreeOfAKind())
 	})
@@ -269,33 +267,33 @@ func TestIsThreeOfAKind(t *testing.T) {
 func TestIsTwoPair(t *testing.T) {
 	t.Run("should return true for a two pair hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.King, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.KingOfDiamonds,
+			card.KingOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.True(t, h.IsTwoPair())
 	})
 
 	t.Run("should return false for a one pair hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Queen, suit.Diamond),
-			card.New(rank.Jack, suit.Club),
-			card.New(rank.Ten, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.QueenOfDiamonds,
+			card.JackOfClubs,
+			card.TenOfHearts,
 		)
 		assert.False(t, h.IsTwoPair())
 	})
 
 	t.Run("should return false for a full house hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Ace, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.King, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.AceOfDiamonds,
+			card.KingOfClubs,
+			card.KingOfHearts,
 		)
 		assert.False(t, h.IsTwoPair())
 	})
@@ -304,22 +302,22 @@ func TestIsTwoPair(t *testing.T) {
 func TestIsOnePair(t *testing.T) {
 	t.Run("should return true for a one pair hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Queen, suit.Diamond),
-			card.New(rank.Jack, suit.Club),
-			card.New(rank.Ten, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.QueenOfDiamonds,
+			card.JackOfClubs,
+			card.TenOfHearts,
 		)
 		assert.True(t, h.IsOnePair())
 	})
 
 	t.Run("should return false for a two pair hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.King, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.Five, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.KingOfDiamonds,
+			card.KingOfClubs,
+			card.FiveOfHearts,
 		)
 		assert.False(t, h.IsOnePair())
 	})
@@ -328,57 +326,57 @@ func TestIsOnePair(t *testing.T) {
 func TestSort(t *testing.T) {
 	t.Run("should sort the hand in ascending order by rank", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.King, suit.Heart),
-			card.New(rank.Three, suit.Spade),
-			card.New(rank.Queen, suit.Diamond),
-			card.New(rank.Five, suit.Club),
-			card.New(rank.Ten, suit.Heart),
+			card.KingOfHearts,
+			card.ThreeOfSpades,
+			card.QueenOfDiamonds,
+			card.FiveOfClubs,
+			card.TenOfHearts,
 		)
 		h.Sort()
 		expected := NewHand(
-			card.New(rank.Three, suit.Spade),
-			card.New(rank.Five, suit.Club),
-			card.New(rank.Ten, suit.Heart),
-			card.New(rank.Queen, suit.Diamond),
-			card.New(rank.King, suit.Heart),
+			card.ThreeOfSpades,
+			card.FiveOfClubs,
+			card.TenOfHearts,
+			card.QueenOfDiamonds,
+			card.KingOfHearts,
 		)
 		assert.Equal(t, expected, h)
 	})
 
 	t.Run("should sort a hand with duplicate ranks", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Five, suit.Heart),
-			card.New(rank.Three, suit.Spade),
-			card.New(rank.Five, suit.Diamond),
-			card.New(rank.Two, suit.Club),
-			card.New(rank.Three, suit.Heart),
+			card.FiveOfHearts,
+			card.ThreeOfSpades,
+			card.FiveOfDiamonds,
+			card.TwoOfClubs,
+			card.ThreeOfHearts,
 		)
 		h.Sort()
 		expected := NewHand(
-			card.New(rank.Two, suit.Club),
-			card.New(rank.Three, suit.Spade),
-			card.New(rank.Three, suit.Heart),
-			card.New(rank.Five, suit.Heart),
-			card.New(rank.Five, suit.Diamond),
+			card.TwoOfClubs,
+			card.ThreeOfSpades,
+			card.ThreeOfHearts,
+			card.FiveOfHearts,
+			card.FiveOfDiamonds,
 		)
 		assert.Equal(t, expected, h)
 	})
 
 	t.Run("should sort a hand with ace as the highest rank", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Three, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Ten, suit.Diamond),
-			card.New(rank.Four, suit.Club),
-			card.New(rank.King, suit.Heart),
+			card.ThreeOfHearts,
+			card.AceOfSpades,
+			card.TenOfDiamonds,
+			card.FourOfClubs,
+			card.KingOfHearts,
 		)
 		h.Sort()
 		expected := NewHand(
-			card.New(rank.Three, suit.Heart),
-			card.New(rank.Four, suit.Club),
-			card.New(rank.Ten, suit.Diamond),
-			card.New(rank.King, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
+			card.ThreeOfHearts,
+			card.FourOfClubs,
+			card.TenOfDiamonds,
+			card.KingOfHearts,
+			card.AceOfSpades,
 		)
 		assert.Equal(t, expected, h)
 	})
@@ -387,44 +385,44 @@ func TestSort(t *testing.T) {
 func TestCountPairs(t *testing.T) {
 	t.Run("should return 0 for a hand with no pairs", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.King, suit.Spade),
-			card.New(rank.Queen, suit.Diamond),
-			card.New(rank.Jack, suit.Club),
-			card.New(rank.Ten, suit.Heart),
+			card.AceOfHearts,
+			card.KingOfSpades,
+			card.QueenOfDiamonds,
+			card.JackOfClubs,
+			card.TenOfHearts,
 		)
 		assert.Equal(t, 0, h.countPairs())
 	})
 
 	t.Run("should return 1 for a hand with one pair", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.Queen, suit.Diamond),
-			card.New(rank.Jack, suit.Club),
-			card.New(rank.Ten, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.QueenOfDiamonds,
+			card.JackOfClubs,
+			card.TenOfHearts,
 		)
 		assert.Equal(t, 1, h.countPairs())
 	})
 
 	t.Run("should return 2 for a hand with two pairs", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.King, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.Ten, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.KingOfDiamonds,
+			card.KingOfClubs,
+			card.TenOfHearts,
 		)
 		assert.Equal(t, 2, h.countPairs())
 	})
 
 	t.Run("should return 1 for a full house hand", func(t *testing.T) {
 		h := NewHand(
-			card.New(rank.Ace, suit.Heart),
-			card.New(rank.Ace, suit.Spade),
-			card.New(rank.King, suit.Diamond),
-			card.New(rank.King, suit.Club),
-			card.New(rank.King, suit.Heart),
+			card.AceOfHearts,
+			card.AceOfSpades,
+			card.KingOfDiamonds,
+			card.KingOfClubs,
+			card.KingOfHearts,
 		)
 		assert.Equal(t, 1, h.countPairs())
 	})
