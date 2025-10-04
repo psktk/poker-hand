@@ -1,9 +1,9 @@
 package suit
 
-type Suit uint8
+type S uint8
 
 const (
-	Heart Suit = iota
+	Heart S = iota
 	Spade
 	Diamond
 	Club

@@ -7,9 +7,9 @@ import (
 
 type C struct {
 	Rank rank.R
-	Suit suit.Suit
+	Suit suit.S
 }
 
-func New(r rank.R, s suit.Suit) C {
+func New(r rank.R, s suit.S) C {
 	return C{r, s}
 }
