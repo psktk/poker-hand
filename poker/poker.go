@@ -26,21 +26,14 @@ func (h Hand) IsStraight() bool {
 		ranks[c.Rank] = true
 	}
 
-	min, max := card.Ace, card.Two
-	for r := range ranks {
-		if r < min {
-			min = r
-		}
-		if r > max {
-			max = r
-		}
-	}
-
 	if len(ranks) < 5 {
 		return false
 	}
 
-	if max-min == 4 {
+	// copy hand to sort without modifying original
+	h2 := h
+	h2.Sort()
+	if h2[4].Rank-h2[0].Rank == 4 {
 		return true
 	}
 
