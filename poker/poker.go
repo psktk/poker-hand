@@ -66,31 +66,23 @@ func (h Hand) IsFourOfAKind() bool {
 }
 
 func (h Hand) IsFullHouse() bool {
-	hasThree := false
 	hasTwo := false
 	for _, count := range h.rankCountMap() {
-		if count == 3 {
-			hasThree = true
-		}
 		if count == 2 {
 			hasTwo = true
 		}
 	}
-	return hasThree && hasTwo
+	return h.hasTriplet() && hasTwo
 }
 
 func (h Hand) IsThreeOfAKind() bool {
-	hasThree := false
 	hasPair := false
 	for _, count := range h.rankCountMap() {
-		if count == 3 {
-			hasThree = true
-		}
 		if count == 2 {
 			hasPair = true
 		}
 	}
-	return hasThree && !hasPair
+	return h.hasTriplet() && !hasPair
 }
 
 func (h *Hand) Sort() {
@@ -109,4 +101,13 @@ func (h Hand) rankCountMap() map[rank.R]int {
 		m[c.Rank]++
 	}
 	return m
+}
+
+func (h Hand) hasTriplet() bool {
+	for _, count := range h.rankCountMap() {
+		if count == 3 {
+			return true
+		}
+	}
+	return false
 }
