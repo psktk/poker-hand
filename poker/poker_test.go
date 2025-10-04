@@ -157,6 +157,30 @@ func TestIsStraightFlush(t *testing.T) {
 	})
 }
 
+func TestIsRoyalFlush(t *testing.T) {
+	t.Run("should return true for a royal flush hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.Ten, card.Heart),
+			card.New(card.Jack, card.Heart),
+			card.New(card.Queen, card.Heart),
+			card.New(card.King, card.Heart),
+			card.New(card.Ace, card.Heart),
+		)
+		assert.True(t, h.IsRoyalFlush())
+	})
+
+	t.Run("should return false for a straight flush hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.Nine, card.Heart),
+			card.New(card.Ten, card.Heart),
+			card.New(card.Jack, card.Heart),
+			card.New(card.Queen, card.Heart),
+			card.New(card.King, card.Heart),
+		)
+		assert.False(t, h.IsRoyalFlush())
+	})
+}
+
 func TestSort(t *testing.T) {
 	t.Run("should sort the hand in ascending order by rank", func(t *testing.T) {
 		h := NewHand(

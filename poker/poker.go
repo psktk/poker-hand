@@ -49,6 +49,12 @@ func (h Hand) IsStraightFlush() bool {
 	return h.IsFlush() && h.IsStraight()
 }
 
+func (h Hand) IsRoyalFlush() bool {
+	h2 := h
+	h2.Sort()
+	return h.IsStraightFlush() && h2[4].Rank == card.Ace
+}
+
 func (h *Hand) Sort() {
 	for i := range 4 {
 		for j := range 4 - i {
