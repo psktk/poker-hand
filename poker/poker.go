@@ -22,7 +22,7 @@ func (h Hand) IsFlush() bool {
 }
 
 func (h Hand) IsStraight() bool {
-	ranks := make(map[rank.Rank]bool)
+	ranks := make(map[rank.R]bool)
 	for _, c := range h {
 		ranks[c.Rank] = true
 	}
@@ -57,7 +57,7 @@ func (h Hand) IsRoyalFlush() bool {
 }
 
 func (h Hand) IsFourOfAKind() bool {
-	rankCount := make(map[rank.Rank]int)
+	rankCount := make(map[rank.R]int)
 	for _, c := range h {
 		rankCount[c.Rank]++
 	}

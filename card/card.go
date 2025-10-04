@@ -6,10 +6,10 @@ import (
 )
 
 type C struct {
-	Rank rank.Rank
+	Rank rank.R
 	Suit suit.Suit
 }
 
-func New(r rank.Rank, s suit.Suit) C {
+func New(r rank.R, s suit.Suit) C {
 	return C{r, s}
 }

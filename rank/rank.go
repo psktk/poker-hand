@@ -1,9 +1,9 @@
 package rank
 
-type Rank uint8
+type R uint8
 
 const (
-	Two Rank = iota
+	Two R = iota
 	Three
 	Four
 	Five
