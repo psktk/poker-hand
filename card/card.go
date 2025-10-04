@@ -1,23 +1,8 @@
 package card
 
-type Rank uint8
-type Suit uint8
+import "github.com/psktk/poker-hand/rank"
 
-const (
-	Two Rank = iota
-	Three
-	Four
-	Five
-	Six
-	Seven
-	Eight
-	Nine
-	Ten
-	Jack
-	Queen
-	King
-	Ace
-)
+type Suit uint8
 
 const (
 	Heart Suit = iota
@@ -27,10 +12,10 @@ const (
 )
 
 type C struct {
-	Rank Rank
+	Rank rank.Rank
 	Suit Suit
 }
 
-func New(r Rank, s Suit) C {
+func New(r rank.Rank, s Suit) C {
 	return C{r, s}
 }

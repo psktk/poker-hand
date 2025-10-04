@@ -2,6 +2,7 @@ package poker
 
 import (
 	"github.com/psktk/poker-hand/card"
+	"github.com/psktk/poker-hand/rank"
 )
 
 type Hand [5]card.C
@@ -21,7 +22,7 @@ func (h Hand) IsFlush() bool {
 }
 
 func (h Hand) IsStraight() bool {
-	ranks := make(map[card.Rank]bool)
+	ranks := make(map[rank.Rank]bool)
 	for _, c := range h {
 		ranks[c.Rank] = true
 	}
@@ -38,7 +39,7 @@ func (h Hand) IsStraight() bool {
 	}
 
 	// special case: A, 2, 3, 4, 5
-	if ranks[card.Ace] && ranks[card.Two] && ranks[card.Three] && ranks[card.Four] && ranks[card.Five] {
+	if ranks[rank.Ace] && ranks[rank.Two] && ranks[rank.Three] && ranks[rank.Four] && ranks[rank.Five] {
 		return true
 	}
 
@@ -52,7 +53,20 @@ func (h Hand) IsStraightFlush() bool {
 func (h Hand) IsRoyalFlush() bool {
 	h2 := h
 	h2.Sort()
-	return h.IsStraightFlush() && h2[4].Rank == card.Ace
+	return h.IsStraightFlush() && h2[4].Rank == rank.Ace
+}
+
+func (h Hand) IsFourOfAKind() bool {
+	rankCount := make(map[rank.Rank]int)
+	for _, c := range h {
+		rankCount[c.Rank]++
+	}
+	for _, count := range rankCount {
+		if count == 4 {
+			return true
+		}
+	}
+	return false
 }
 
 func (h *Hand) Sort() {
