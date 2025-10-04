@@ -183,6 +183,30 @@ func TestIsRoyalFlush(t *testing.T) {
 	})
 }
 
+func TestIsFourOfAKind(t *testing.T) {
+	t.Run("should return true for a four of a kind hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.Ace, suit.Diamond),
+			card.New(rank.Ace, suit.Club),
+			card.New(rank.Five, suit.Heart),
+		)
+		assert.True(t, h.IsFourOfAKind())
+	})
+
+	t.Run("should return false for a non-four of a kind hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(rank.Ace, suit.Heart),
+			card.New(rank.Ace, suit.Spade),
+			card.New(rank.Ace, suit.Diamond),
+			card.New(rank.King, suit.Club),
+			card.New(rank.Five, suit.Heart),
+		)
+		assert.False(t, h.IsFourOfAKind())
+	})
+}
+
 func TestSort(t *testing.T) {
 	t.Run("should sort the hand in ascending order by rank", func(t *testing.T) {
 		h := NewHand(
