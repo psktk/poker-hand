@@ -73,6 +73,10 @@ func (h Hand) IsThreeOfAKind() bool {
 	return h.hasTriplet() && h.countPairs() == 0
 }
 
+func (h Hand) IsTwoPair() bool {
+	return h.countPairs() == 2
+}
+
 func (h *Hand) Sort() {
 	for i := range 4 {
 		for j := range 4 - i {
