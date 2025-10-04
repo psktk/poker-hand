@@ -111,6 +111,52 @@ func TestIsStraight(t *testing.T) {
 	})
 }
 
+func TestIsStraightFlush(t *testing.T) {
+	t.Run("should return true for a straight flush hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.Ace, card.Heart),
+			card.New(card.Two, card.Heart),
+			card.New(card.Three, card.Heart),
+			card.New(card.Four, card.Heart),
+			card.New(card.Five, card.Heart),
+		)
+		assert.True(t, h.IsStraightFlush())
+	})
+
+	t.Run("should return false for a flush hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.Two, card.Spade),
+			card.New(card.Four, card.Spade),
+			card.New(card.Six, card.Spade),
+			card.New(card.Eight, card.Spade),
+			card.New(card.Ten, card.Spade),
+		)
+		assert.False(t, h.IsStraightFlush())
+	})
+
+	t.Run("should return false for a straight hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.Two, card.Heart),
+			card.New(card.Three, card.Spade),
+			card.New(card.Four, card.Diamond),
+			card.New(card.Five, card.Club),
+			card.New(card.Six, card.Heart),
+		)
+		assert.False(t, h.IsStraightFlush())
+	})
+
+	t.Run("should return false for a non-straight flush hand", func(t *testing.T) {
+		h := NewHand(
+			card.New(card.Two, card.Heart),
+			card.New(card.Four, card.Heart),
+			card.New(card.Six, card.Heart),
+			card.New(card.Eight, card.Heart),
+			card.New(card.Ten, card.Spade),
+		)
+		assert.False(t, h.IsStraightFlush())
+	})
+}
+
 func TestSort(t *testing.T) {
 	t.Run("should sort the hand in ascending order by rank", func(t *testing.T) {
 		h := NewHand(

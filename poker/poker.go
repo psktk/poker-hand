@@ -45,6 +45,10 @@ func (h Hand) IsStraight() bool {
 	return false
 }
 
+func (h Hand) IsStraightFlush() bool {
+	return h.IsFlush() && h.IsStraight()
+}
+
 func (h *Hand) Sort() {
 	for i := range 4 {
 		for j := range 4 - i {
