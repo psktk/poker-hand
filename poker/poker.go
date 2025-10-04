@@ -1,6 +1,8 @@
 package poker
 
-import "github.com/psktk/poker-hand/card"
+import (
+	"github.com/psktk/poker-hand/card"
+)
 
 type Hand [5]card.C
 
@@ -16,4 +18,36 @@ func (h Hand) IsFlush() bool {
 		}
 	}
 	return true
+}
+
+func (h Hand) IsStraight() bool {
+	ranks := make(map[card.Rank]bool)
+	for _, c := range h {
+		ranks[c.Rank] = true
+	}
+
+	min, max := card.King, card.Ace
+	for r := range ranks {
+		if r < min {
+			min = r
+		}
+		if r > max {
+			max = r
+		}
+	}
+
+	if len(ranks) < 5 {
+		return false
+	}
+
+	if max-min == 4 {
+		return true
+	}
+
+	// special case: 10, J, Q, K, A
+	if ranks[card.Ten] && ranks[card.Jack] && ranks[card.Queen] && ranks[card.King] && ranks[card.Ace] {
+		return true
+	}
+
+	return false
 }
