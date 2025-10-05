@@ -80,6 +80,18 @@ func TestCompareStraight(t *testing.T) {
 	})
 }
 
+func TestIsLowStraight(t *testing.T) {
+	t.Run("should return true for a ace-low straight hand", func(t *testing.T) {
+		h := Hand{card.AceOfHearts, card.TwoOfSpades, card.ThreeOfDiamonds, card.FourOfClubs, card.FiveOfHearts}
+		assert.True(t, h.isLowStraight())
+	})
+
+	t.Run("should return false for a ace-high straight hand", func(t *testing.T) {
+		h := Hand{card.TenOfHearts, card.JackOfSpades, card.QueenOfDiamonds, card.KingOfClubs, card.AceOfHearts}
+		assert.False(t, h.isLowStraight())
+	})
+}
+
 func TestIsFlush(t *testing.T) {
 	t.Run("should return true for a straight flush hand", func(t *testing.T) {
 		h := NewHand(

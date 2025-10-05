@@ -57,6 +57,15 @@ func (h Hand) compareStraight(other Hand) int {
 	return h[4].Compare(other[4])
 }
 
+func (h Hand) isLowStraight() bool {
+	h.Sort()
+	return h[0].Rank == rank.Two &&
+		h[1].Rank == rank.Three &&
+		h[2].Rank == rank.Four &&
+		h[3].Rank == rank.Five &&
+		h[4].Rank == rank.Ace
+}
+
 func (h Hand) IsFlush() bool {
 	suit := h[0].Suit
 	for _, c := range h {
