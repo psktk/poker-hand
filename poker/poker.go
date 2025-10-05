@@ -27,34 +27,28 @@ func NewHand(c1, c2, c3, c4, c5 card.C) Hand {
 }
 
 func (h Hand) Rank() HandRank {
-	if h.IsRoyalFlush() {
+	switch {
+	case h.IsRoyalFlush():
 		return RoyalFlush
-	}
-	if h.IsStraightFlush() {
+	case h.IsStraightFlush():
 		return StraightFlush
-	}
-	if h.IsFourOfAKind() {
+	case h.IsFourOfAKind():
 		return FourOfAKind
-	}
-	if h.IsFullHouse() {
+	case h.IsFullHouse():
 		return FullHouse
-	}
-	if h.IsFlush() {
+	case h.IsFlush():
 		return Flush
-	}
-	if h.IsStraight() {
+	case h.IsStraight():
 		return Straight
-	}
-	if h.IsThreeOfAKind() {
+	case h.IsThreeOfAKind():
 		return ThreeOfAKind
-	}
-	if h.IsTwoPair() {
+	case h.IsTwoPair():
 		return TwoPair
-	}
-	if h.IsOnePair() {
+	case h.IsOnePair():
 		return OnePair
+	default:
+		return HighCard
 	}
-	return HighCard
 }
 
 func (h Hand) IsFlush() bool {
