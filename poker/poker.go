@@ -52,8 +52,12 @@ func (h Hand) Rank() HandRank {
 }
 
 func (h Hand) compareStraight(other Hand) int {
-	h.Sort()
-	other.Sort()
+	if h.isLowStraight() {
+		h = Hand{h[4], h[0], h[1], h[2], h[3]}
+	}
+	if other.isLowStraight() {
+		other = Hand{other[4], other[0], other[1], other[2], other[3]}
+	}
 	return h[4].Compare(other[4])
 }
 

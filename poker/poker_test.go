@@ -78,6 +78,24 @@ func TestCompareStraight(t *testing.T) {
 		h2 := Hand{card.NineOfDiamonds, card.TenOfClubs, card.JackOfSpades, card.QueenOfHearts, card.KingOfHearts}
 		assert.Equal(t, 0, h1.compareStraight(h2))
 	})
+
+	t.Run("should return -1 if the first hand is a low straight and the second is not", func(t *testing.T) {
+		h1 := Hand{card.AceOfHearts, card.TwoOfSpades, card.ThreeOfDiamonds, card.FourOfClubs, card.FiveOfHearts}
+		h2 := Hand{card.TwoOfDiamonds, card.ThreeOfClubs, card.FourOfSpades, card.FiveOfHearts, card.SixOfHearts}
+		assert.Equal(t, -1, h1.compareStraight(h2))
+	})
+
+	t.Run("should return 1 if the first hand is not a low straight and the second is", func(t *testing.T) {
+		h1 := Hand{card.TwoOfDiamonds, card.ThreeOfClubs, card.FourOfSpades, card.FiveOfHearts, card.SixOfHearts}
+		h2 := Hand{card.AceOfHearts, card.TwoOfSpades, card.ThreeOfDiamonds, card.FourOfClubs, card.FiveOfHearts}
+		assert.Equal(t, 1, h1.compareStraight(h2))
+	})
+
+	t.Run("should return 0 if both hands are low straights", func(t *testing.T) {
+		h1 := Hand{card.AceOfHearts, card.TwoOfSpades, card.ThreeOfDiamonds, card.FourOfClubs, card.FiveOfHearts}
+		h2 := Hand{card.AceOfDiamonds, card.TwoOfClubs, card.ThreeOfSpades, card.FourOfHearts, card.FiveOfHearts}
+		assert.Equal(t, 0, h1.compareStraight(h2))
+	})
 }
 
 func TestIsLowStraight(t *testing.T) {
