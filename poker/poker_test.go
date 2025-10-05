@@ -8,6 +8,58 @@ import (
 	"github.com/psktk/poker-hand/card"
 )
 
+func TestRank(t *testing.T) {
+	t.Run("should return RoyalFlush for a royal flush hand", func(t *testing.T) {
+		h := Hand{card.TenOfHearts, card.JackOfHearts, card.QueenOfHearts, card.KingOfHearts, card.AceOfHearts}
+		assert.Equal(t, RoyalFlush, h.Rank())
+	})
+
+	t.Run("should return StraightFlush for a straight flush hand", func(t *testing.T) {
+		h := Hand{card.NineOfHearts, card.TenOfHearts, card.JackOfHearts, card.QueenOfHearts, card.KingOfHearts}
+		assert.Equal(t, StraightFlush, h.Rank())
+	})
+
+	t.Run("should return FourOfAKind for a four of a kind hand", func(t *testing.T) {
+		h := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.FiveOfHearts}
+		assert.Equal(t, FourOfAKind, h.Rank())
+	})
+
+	t.Run("should return FullHouse for a full house hand", func(t *testing.T) {
+		h := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.KingOfClubs, card.KingOfHearts}
+		assert.Equal(t, FullHouse, h.Rank())
+	})
+
+	t.Run("should return Flush for a flush hand", func(t *testing.T) {
+		h := Hand{card.TwoOfSpades, card.FourOfSpades, card.SixOfSpades, card.EightOfSpades, card.TenOfSpades}
+		assert.Equal(t, Flush, h.Rank())
+	})
+
+	t.Run("should return Straight for a straight hand", func(t *testing.T) {
+		h := Hand{card.NineOfHearts, card.TenOfSpades, card.JackOfDiamonds, card.QueenOfClubs, card.KingOfHearts}
+		assert.Equal(t, Straight, h.Rank())
+	})
+
+	t.Run("should return ThreeOfAKind for a three of a kind hand", func(t *testing.T) {
+		h := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.KingOfClubs, card.FiveOfHearts}
+		assert.Equal(t, ThreeOfAKind, h.Rank())
+	})
+
+	t.Run("should return TwoPair for a two pair hand", func(t *testing.T) {
+		h := Hand{card.AceOfHearts, card.AceOfSpades, card.KingOfDiamonds, card.KingOfClubs, card.FiveOfHearts}
+		assert.Equal(t, TwoPair, h.Rank())
+	})
+
+	t.Run("should return OnePair for a one pair hand", func(t *testing.T) {
+		h := Hand{card.AceOfHearts, card.AceOfSpades, card.QueenOfDiamonds, card.JackOfClubs, card.TenOfHearts}
+		assert.Equal(t, OnePair, h.Rank())
+	})
+
+	t.Run("should return HighCard for a high card hand", func(t *testing.T) {
+		h := Hand{card.AceOfHearts, card.KingOfSpades, card.QueenOfDiamonds, card.JackOfClubs, card.NineOfClubs}
+		assert.Equal(t, HighCard, h.Rank())
+	})
+}
+
 func TestIsFlush(t *testing.T) {
 	t.Run("should return true for a straight flush hand", func(t *testing.T) {
 		h := NewHand(

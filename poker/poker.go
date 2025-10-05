@@ -5,10 +5,56 @@ import (
 	"github.com/psktk/poker-hand/rank"
 )
 
+type HandRank uint8
+
+const (
+	HighCard HandRank = iota
+	OnePair
+	TwoPair
+	ThreeOfAKind
+	Straight
+	Flush
+	FullHouse
+	FourOfAKind
+	StraightFlush
+	RoyalFlush
+)
+
 type Hand [5]card.C
 
 func NewHand(c1, c2, c3, c4, c5 card.C) Hand {
 	return Hand{c1, c2, c3, c4, c5}
+}
+
+func (h Hand) Rank() HandRank {
+	if h.IsRoyalFlush() {
+		return RoyalFlush
+	}
+	if h.IsStraightFlush() {
+		return StraightFlush
+	}
+	if h.IsFourOfAKind() {
+		return FourOfAKind
+	}
+	if h.IsFullHouse() {
+		return FullHouse
+	}
+	if h.IsFlush() {
+		return Flush
+	}
+	if h.IsStraight() {
+		return Straight
+	}
+	if h.IsThreeOfAKind() {
+		return ThreeOfAKind
+	}
+	if h.IsTwoPair() {
+		return TwoPair
+	}
+	if h.IsOnePair() {
+		return OnePair
+	}
+	return HighCard
 }
 
 func (h Hand) IsFlush() bool {
