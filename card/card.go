@@ -71,3 +71,14 @@ type C struct {
 func New(r rank.R, s suit.S) C {
 	return C{r, s}
 }
+
+// Compare returns 1 if c > other, -1 if c < other, 0 if equal
+func (c C) Compare(other C) int {
+	if c.Rank > other.Rank {
+		return 1
+	}
+	if c.Rank < other.Rank {
+		return -1
+	}
+	return 0
+}
