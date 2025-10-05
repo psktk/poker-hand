@@ -60,6 +60,26 @@ func TestRank(t *testing.T) {
 	})
 }
 
+func TestCompareStraight(t *testing.T) {
+	t.Run("should return 1 if this hand's straight is higher", func(t *testing.T) {
+		h1 := Hand{card.NineOfHearts, card.TenOfSpades, card.JackOfDiamonds, card.QueenOfClubs, card.KingOfHearts}
+		h2 := Hand{card.EightOfHearts, card.NineOfDiamonds, card.TenOfClubs, card.JackOfSpades, card.QueenOfHearts}
+		assert.Equal(t, 1, h1.compareStraight(h2))
+	})
+
+	t.Run("should return -1 if this hand's straight is lower", func(t *testing.T) {
+		h1 := Hand{card.EightOfHearts, card.NineOfDiamonds, card.TenOfClubs, card.JackOfSpades, card.QueenOfHearts}
+		h2 := Hand{card.NineOfHearts, card.TenOfSpades, card.JackOfDiamonds, card.QueenOfClubs, card.KingOfHearts}
+		assert.Equal(t, -1, h1.compareStraight(h2))
+	})
+
+	t.Run("should return 0 if this hand's straight is the same", func(t *testing.T) {
+		h1 := Hand{card.NineOfHearts, card.TenOfSpades, card.JackOfDiamonds, card.QueenOfClubs, card.KingOfHearts}
+		h2 := Hand{card.NineOfDiamonds, card.TenOfClubs, card.JackOfSpades, card.QueenOfHearts, card.KingOfHearts}
+		assert.Equal(t, 0, h1.compareStraight(h2))
+	})
+}
+
 func TestIsFlush(t *testing.T) {
 	t.Run("should return true for a straight flush hand", func(t *testing.T) {
 		h := NewHand(
