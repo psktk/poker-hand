@@ -131,6 +131,37 @@ func TestQuadRank(t *testing.T) {
 	})
 }
 
+func TestCompareFourOfAKind(t *testing.T) {
+	t.Run("should return 1 if this hand's four of a kind is higher", func(t *testing.T) {
+		h1 := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.FiveOfHearts}
+		h2 := Hand{card.KingOfHearts, card.KingOfSpades, card.KingOfDiamonds, card.KingOfClubs, card.FiveOfHearts}
+		assert.Equal(t, 1, h1.compareFourOfAKind(h2))
+	})
+
+	t.Run("should return -1 if this hand's four of a kind is lower", func(t *testing.T) {
+		h1 := Hand{card.KingOfHearts, card.KingOfSpades, card.KingOfDiamonds, card.KingOfClubs, card.FiveOfHearts}
+		h2 := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.FiveOfHearts}
+		assert.Equal(t, -1, h1.compareFourOfAKind(h2))
+	})
+
+	t.Run("should return 1 if this hand's kicker is higher", func(t *testing.T) {
+		h1 := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.SixOfHearts}
+		h2 := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.FiveOfHearts}
+		assert.Equal(t, 1, h1.compareFourOfAKind(h2))
+	})
+
+	t.Run("should return -1 if this hand's kicker is lower", func(t *testing.T) {
+		h1 := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.FiveOfHearts}
+		h2 := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.SixOfHearts}
+		assert.Equal(t, -1, h1.compareFourOfAKind(h2))
+	})
+
+	t.Run("should return 0 if both hands are the same", func(t *testing.T) {
+		h1 := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.FiveOfHearts}
+		assert.Equal(t, 0, h1.compareFourOfAKind(h1))
+	})
+}
+
 func TestIsLowStraight(t *testing.T) {
 	t.Run("should return true for a ace-low straight hand", func(t *testing.T) {
 		h := Hand{card.AceOfHearts, card.TwoOfSpades, card.ThreeOfDiamonds, card.FourOfClubs, card.FiveOfHearts}

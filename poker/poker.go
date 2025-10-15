@@ -84,6 +84,15 @@ func (h Hand) quadRank() (q, k rank.R) {
 	return
 }
 
+func (h Hand) compareFourOfAKind(other Hand) int {
+	q1, k1 := h.quadRank()
+	q2, k2 := other.quadRank()
+	if cmp := q1.Compare(q2); cmp != 0 {
+		return cmp
+	}
+	return k1.Compare(k2)
+}
+
 func (h Hand) isLowStraight() bool {
 	h.Sort()
 	return h[0].Rank == rank.Two &&
