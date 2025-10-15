@@ -17,3 +17,14 @@ const (
 	King
 	Ace
 )
+
+func (r R) Compare(other R) int {
+	switch {
+	case r > other:
+		return 1
+	case r < other:
+		return -1
+	default:
+		return 0
+	}
+}
