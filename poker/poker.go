@@ -72,6 +72,18 @@ func (h Hand) compareFlush(other Hand) int {
 	return 0
 }
 
+func (h Hand) quadRank() (q, k rank.R) {
+	for r, count := range h.rankCountMap() {
+		switch count {
+		case 4:
+			q = r
+		case 1:
+			k = r
+		}
+	}
+	return
+}
+
 func (h Hand) isLowStraight() bool {
 	h.Sort()
 	return h[0].Rank == rank.Two &&

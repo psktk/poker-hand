@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/psktk/poker-hand/card"
+	"github.com/psktk/poker-hand/rank"
 )
 
 func TestRank(t *testing.T) {
@@ -115,6 +116,18 @@ func TestCompareFlush(t *testing.T) {
 		h1 := Hand{card.TwoOfHearts, card.FourOfHearts, card.SixOfHearts, card.EightOfHearts, card.TenOfHearts}
 		h2 := Hand{card.TwoOfDiamonds, card.FourOfDiamonds, card.SixOfDiamonds, card.EightOfDiamonds, card.TenOfDiamonds}
 		assert.Equal(t, 0, h1.compareFlush(h2))
+	})
+}
+
+func TestQuadRank(t *testing.T) {
+	t.Run("should return the rank of the four of a kind", func(t *testing.T) {
+		q, _ := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.FiveOfHearts}.quadRank()
+		assert.Equal(t, rank.Ace, q)
+	})
+
+	t.Run("should return the rank of the kicker", func(t *testing.T) {
+		_, k := Hand{card.AceOfHearts, card.AceOfSpades, card.AceOfDiamonds, card.AceOfClubs, card.FiveOfHearts}.quadRank()
+		assert.Equal(t, rank.Five, k)
 	})
 }
 
