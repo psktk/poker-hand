@@ -98,6 +98,26 @@ func TestCompareStraight(t *testing.T) {
 	})
 }
 
+func TestCompareFlush(t *testing.T) {
+	t.Run("should return 1 if this hand's flush is higher", func(t *testing.T) {
+		h1 := Hand{card.TwoOfSpades, card.FourOfSpades, card.SixOfSpades, card.EightOfSpades, card.AceOfSpades}
+		h2 := Hand{card.TwoOfHearts, card.FourOfHearts, card.SixOfHearts, card.EightOfHearts, card.KingOfHearts}
+		assert.Equal(t, 1, h1.compareFlush(h2))
+	})
+
+	t.Run("should return -1 if this hand's flush is lower", func(t *testing.T) {
+		h1 := Hand{card.TwoOfHearts, card.FourOfHearts, card.SixOfHearts, card.EightOfHearts, card.KingOfHearts}
+		h2 := Hand{card.TwoOfSpades, card.FourOfSpades, card.SixOfSpades, card.EightOfSpades, card.AceOfSpades}
+		assert.Equal(t, -1, h1.compareFlush(h2))
+	})
+
+	t.Run("should return 0 if this hand's flush is the same", func(t *testing.T) {
+		h1 := Hand{card.TwoOfHearts, card.FourOfHearts, card.SixOfHearts, card.EightOfHearts, card.TenOfHearts}
+		h2 := Hand{card.TwoOfDiamonds, card.FourOfDiamonds, card.SixOfDiamonds, card.EightOfDiamonds, card.TenOfDiamonds}
+		assert.Equal(t, 0, h1.compareFlush(h2))
+	})
+}
+
 func TestIsLowStraight(t *testing.T) {
 	t.Run("should return true for a ace-low straight hand", func(t *testing.T) {
 		h := Hand{card.AceOfHearts, card.TwoOfSpades, card.ThreeOfDiamonds, card.FourOfClubs, card.FiveOfHearts}

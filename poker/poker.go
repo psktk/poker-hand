@@ -61,6 +61,17 @@ func (h Hand) compareStraight(other Hand) int {
 	return h[4].Compare(other[4])
 }
 
+func (h Hand) compareFlush(other Hand) int {
+	h.Sort()
+	other.Sort()
+	for i := 4; i >= 0; i-- {
+		if cmp := h[i].Compare(other[i]); cmp != 0 {
+			return cmp
+		}
+	}
+	return 0
+}
+
 func (h Hand) isLowStraight() bool {
 	h.Sort()
 	return h[0].Rank == rank.Two &&
